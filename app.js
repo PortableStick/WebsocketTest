@@ -53,10 +53,15 @@ const server = new WebSocket.Server({ server: httpServer });
 
 
 server.on('connection', conn => {
-  setInterval(() => {
+  const interval = setInterval(() => {
     const randNumber = Math.floor(Math.random() * messages.length);
     server.clients.forEach(client => {
         client.send(messages[randNumber]);
     })
   }, 1000)
+
+  conn.on("close", () => {
+    console.log("Connection closed");
+    clearInterval(interval);
+  })
 })

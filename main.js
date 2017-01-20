@@ -1,5 +1,6 @@
 window.onload = function () {
-  var ws = new WebSocket('ws://localhost:8090');
+  var host = location.origin.replace(/^http/, 'ws')
+  var ws = new WebSocket(host);
   var messagesList = document.querySelector('#messages');
   var status = document.querySelector('#status');
 

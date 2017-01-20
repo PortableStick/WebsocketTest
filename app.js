@@ -2,9 +2,10 @@ const http = require('http'),
       fs = require('fs'),
       url = require('url'),
       path = require('path'),
-      events = require('events');
+      events = require('events'),
+      port = process.env.PORT || 9000;
 const messages = ["Tomato", "Steelblue", "Orchid", "PapayaWhip", "Hello, World"]
-http.createServer((request, response) => {
+const httpServer = http.createServer((request, response) => {
   console.log(`${request.method} ${request.url}`);
   const parsedUrl = url.parse(request.url);
   let pathname = `.${parsedUrl.pathname}`;
@@ -44,11 +45,11 @@ http.createServer((request, response) => {
       }
     });
   });
-}).listen(9000, () => { console.log("Server running on port 9000") })
+}).listen(port, () => { console.log(`server running on port ${port}`) })
 
 
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: 8090 });
+const server = new WebSocket.Server({ server: httpServer });
 
 
 server.on('connection', conn => {
